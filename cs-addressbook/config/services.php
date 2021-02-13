@@ -30,4 +30,11 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'churchsuite' => [
+        'api_url' => env('CHURCHSUITE_API_URL'),
+        'account' => env('CHURCHSUITE_ACCOUNT'),
+        'app' => env('CHURCHSUITE_APP'),
+        'key' => env('CHURCHSUITE_KEY')
+    ]
+
 ];

@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ChurchSuiteService;
 use Illuminate\Http\Request;
 
 class ContactsApiController extends Controller
 {
+    private $api;
+
+    public function __construct(ChurchSuiteService $api) {
+        $this->api = $api;
+    }
+
     public function getContacts(Request $request) {
 
         $contacts = array(
@@ -21,12 +28,9 @@ class ContactsApiController extends Controller
 
     public function getContact(Request $requeset, $contact_id) {
 
-        $contact = array(
-            'response' => 'Specific contact',
-            'contact_id' => $contact_id
-        );
+        $result = $this->api->get('/addressbook/contact/' . $contact_id);
 
-        return response()->json($contact);
+        return response()->json($result);
 
     }
 }
