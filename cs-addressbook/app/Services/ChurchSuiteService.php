@@ -13,10 +13,13 @@ class ChurchSuiteService
     private $client;
 
 
+    /**
+     * @var array
+     */
     private $auth_headers = [];
 
     /**
-     * @param Array $config
+     * @param array $config
      */
     public function __construct(array $config)
     {
@@ -27,7 +30,7 @@ class ChurchSuiteService
     /**
      * Sets the array of the auth headers
      * 
-     * @param Array $config
+     * @param array $config
      */
     public function set_auth_headers(array $config)
     {
@@ -41,11 +44,11 @@ class ChurchSuiteService
     /**
      * Executes a HTTP GET request to the given $endpoint with the query $data appeneded
      * 
-     * @param String $endpoint - the API endpoint to GET
-     * @param Array $data - query data will be appended to the end of the given endpoint after a ?
-     * @return Array
+     * @param string $endpoint - the API endpoint to GET
+     * @param array $data - query data will be appended to the end of the given endpoint after a ?
+     * @return array
      */
-    public function get(String $endpoint, array $data = [])
+    public function get(string $endpoint, array $data = [])
     {
         $endpoint = ltrim($endpoint, '/');
 
