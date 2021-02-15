@@ -12,7 +12,7 @@
 </head>
 
 <body class="min-h-screen bg-gray-100 py-6 sm:py-12 flex flex-col justify-center">
-    <div class="py-6">
+    <div class="py-6" id="addressbook">
         <div class="relative py-3 lg:w-1/2 md:w-2/3 sm:w-3/4 min-w-max sm:max-w-xl lg:max-w-3xl sm:mx-auto">
             <div class="absolute inset-0 bg-gradient-to-b from-yellow-400 to-yellow-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
             <div class="relative px-4 py-6 bg-white shadow-lg sm:rounded-3xl sm:p-10">
@@ -28,41 +28,8 @@
                             </form>
                         </div>
                     </div>
-                    <div class="divide-y divide-gray-200 bg-gray-100 rounded-md p-2">
-                        <div data-contact-id="1" class="flex items-center text-black p-4 hover:bg-white">
-                            <img src="https://d2oqjddkfv895o.cloudfront.net/2mCEi8cf/addressbook/contacts/120_rjgZKtQA_thumb.jpg" alt="" class="w-6 h-6 rounded-full mr-2 bg-gray-100">
-                            Kevin Francis
-                        </div>
-                        <div class="flex items-center text-black p-4 hover:bg-white">
-                            <img src="https://d2oqjddkfv895o.cloudfront.net/2mCEi8cf/addressbook/contacts/120_rjgZKtQA_thumb.jpg" alt="" class="w-6 h-6 rounded-full mr-2 bg-gray-100">
-                            Kevin Francis
-                        </div>
-                        <div class="flex items-center text-black p-4 hover:bg-white">
-                            <img src="https://d2oqjddkfv895o.cloudfront.net/2mCEi8cf/addressbook/contacts/120_rjgZKtQA_thumb.jpg" alt="" class="w-6 h-6 rounded-full mr-2 bg-gray-100">
-                            Kevin Francis
-                        </div>
-                    </div>
+                    <contact-list></contact-list>
 
-                    <div class="bg-gray-100 rounded-md mt-2 p-2 flex flex-wrap-reverse flex-col md:flex-row justify-between">
-                        <div class="md:m-0 mb-4 mt-2 text-center">
-                            Show
-                            <select class="p-2 rounded-md">
-                                <option>5</option>
-                                <option>10</option>
-                                <option>25</option>
-                            </select>
-                            of <span class="p-2 rounded-md bg-white text-yellow-600">45</span> contacts
-                        </div>
-                        <div class="p-2 text-center">
-                            <a href="#" class="text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white">Prev</a>
-                            <a href="#" class="text-white bg-yellow-600 p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white">1</a>
-                            <a href="#" class="text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white">2</a>
-                            <span class="text-gray-600 bg-white p-2 px-4 rounded-md">...</span>
-                            <a href="#" class="text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white">5</a>
-                            <a href="#" class="text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white">6</a>
-                            <a href="#" class="text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white">Next</a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -119,5 +86,6 @@
         </div>
     </div>
 </body>
+<script src="/js/app.js" type="text/javascript"></script>
 
 </html>
