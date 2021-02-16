@@ -46,7 +46,7 @@ class ChurchSuiteService
      * 
      * @param string $endpoint - the API endpoint to GET
      * @param array $data - query data will be appended to the end of the given endpoint after a ?
-     * @return array
+     * @return stdObject 
      */
     public function get(string $endpoint, array $data = [])
     {
