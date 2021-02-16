@@ -30,5 +30,4 @@ const app = createApp({});
 
 app.component('contact-list', ContactList);
 
-app.mount('#addressbook')
-//app.component('contact-list', ContactList)
+app.mount('#addressbook');
