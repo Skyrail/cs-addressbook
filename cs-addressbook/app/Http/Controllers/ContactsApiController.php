@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\ChurchSuiteService;
+use App\Repositories\ContactRepositoryInterface;
 use Illuminate\Http\Request;
 
 class ContactsApiController extends Controller
 {
-    private $api;
+    private $repo;
 
     /**
-     * @param ChurchSuiteService $api
+     * @param ContactRepositoryInterface $repo
      */
-    public function __construct(ChurchSuiteService $api) {
-        // TODO: Change this to be a ContactRepository
-        $this->api = $api;
+    public function __construct(ContactRepositoryInterface $repo) {
+        $this->repo = $repo;
     }
 
     /**
@@ -28,11 +27,7 @@ class ContactsApiController extends Controller
      */
     public function getContacts(Request $request) {
 
-        $result = $this->api->get('/addressbook/contacts', [
-            'q' => $request->query('query'),
-            'page' => $request->query('page'),
-            'per_page' => $request->query('per_page')
-        ]);
+        $result = $this->repo->find($request->query('query'));
 
         return response()->json($result);
     }
@@ -45,7 +40,7 @@ class ContactsApiController extends Controller
      */
     public function getContact(Request $requeset, int $contact_id) {
 
-        $result = $this->api->get('/addressbook/contact/' . $contact_id);
+        $result = $this->repo->findById($contact_id);
 
         return response()->json($result);
     }
