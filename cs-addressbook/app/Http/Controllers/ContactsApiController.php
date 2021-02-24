@@ -27,7 +27,7 @@ class ContactsApiController extends Controller
      */
     public function getContacts(Request $request) {
 
-        $result = $this->repo->find($request->query('query'));
+        $result = $this->repo->find($request->query('query'), $request->query('page'), $request->query('per_page'));
 
         return response()->json($result);
     }

@@ -32,7 +32,7 @@
                 <a href="#" class="text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white mr-2">2</a>
                 <span class="text-gray-600 bg-white p-2 px-4 rounded-md mr-2">...</span>
                 <a href="#" class="text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white mr-2">5</a>
-                <a href="#" class="text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white mr-2">6</a>
+                <a href="#" class="text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white mr-2">{{pageCount}}</a>
                 <a href="#" class="text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white">Next</a>
             </div>
         </div>
@@ -60,6 +60,9 @@ export default {
         contactCount() {
             return this.contacts.length;
         },
+        pageCount() {
+            return 3;
+        }
     },
     watch: {
         searchQuery(query) {
@@ -70,7 +73,7 @@ export default {
             clearTimeout(this.searchTimeout)
 
             this.searchTimeout = setTimeout(function(scope) {
-                axios.get(`/api/contacts?query=${query}`).then(response => (scope.contacts = response.data.contacts))
+                axios.get(`/api/contacts?query=${query}&per_page=${scope.perPage}&page=${scope.pageNo}`).then(response => (scope.contacts = response.data.contacts))
             }, 500, this);
             //TODO: get data return - update contacts list
             //TODO: using returned data update the contact count

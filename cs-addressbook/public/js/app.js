@@ -16304,6 +16304,9 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     contactCount: function contactCount() {
       return this.contacts.length;
+    },
+    pageCount: function pageCount() {
+      return 3;
     }
   },
   watch: {
@@ -16314,7 +16317,7 @@ __webpack_require__.r(__webpack_exports__);
 
       clearTimeout(this.searchTimeout);
       this.searchTimeout = setTimeout(function (scope) {
-        axios.get("/api/contacts?query=".concat(query)).then(function (response) {
+        axios.get("/api/contacts?query=".concat(query, "&per_page=").concat(scope.perPage, "&page=").concat(scope.pageNo)).then(function (response) {
           return scope.contacts = response.data.contacts;
         });
       }, 500, this); //TODO: get data return - update contacts list
@@ -16408,7 +16411,23 @@ var _hoisted_10 = {
 
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" contacts ");
 
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"p-2 text-center\"><a href=\"#\" class=\"text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white mr-2\">Prev</a><a href=\"#\" class=\"text-white bg-yellow-600 p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white mr-2\">1</a><a href=\"#\" class=\"text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white mr-2\">2</a><span class=\"text-gray-600 bg-white p-2 px-4 rounded-md mr-2\">...</span><a href=\"#\" class=\"text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white mr-2\">5</a><a href=\"#\" class=\"text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white mr-2\">6</a><a href=\"#\" class=\"text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white\">Next</a></div>", 1);
+var _hoisted_12 = {
+  "class": "p-2 text-center"
+};
+
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<a href=\"#\" class=\"text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white mr-2\">Prev</a><a href=\"#\" class=\"text-white bg-yellow-600 p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white mr-2\">1</a><a href=\"#\" class=\"text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white mr-2\">2</a><span class=\"text-gray-600 bg-white p-2 px-4 rounded-md mr-2\">...</span><a href=\"#\" class=\"text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white mr-2\">5</a>", 5);
+
+var _hoisted_18 = {
+  href: "#",
+  "class": "text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white mr-2"
+};
+
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
+  href: "#",
+  "class": "text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white"
+}, "Next", -1
+/* HOISTED */
+);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_contact_list_item = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("contact-list-item");
@@ -16434,7 +16453,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* KEYED_FRAGMENT */
   ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [_hoisted_7, _hoisted_8, _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.contactCount), 1
   /* TEXT */
-  ), _hoisted_11]), _hoisted_12])]);
+  ), _hoisted_11]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.pageCount), 1
+  /* TEXT */
+  ), _hoisted_19])])]);
 }
 
 /***/ }),
