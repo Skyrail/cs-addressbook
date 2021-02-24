@@ -8,6 +8,7 @@ require('./bootstrap');
 
 import { createApp } from "vue"
 import ContactList from './components/ContactList.vue'
+import ContactDetail from './components/ContactDetail.vue'
 
 /**
  * The following block of code may be used to automatically register your
@@ -29,5 +30,6 @@ import ContactList from './components/ContactList.vue'
 const app = createApp({});
 
 app.component('contact-list', ContactList);
+app.component('contact-detail', ContactDetail);
 
 app.mount('#addressbook');
