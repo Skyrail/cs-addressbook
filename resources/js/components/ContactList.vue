@@ -16,7 +16,7 @@
         <contact-list-item v-for="contact in contacts" :key="contact.id" :contact="contact"></contact-list-item>
     
     </div>
-        <div class="bg-gray-100 rounded-md mt-2 p-2 flex flex-wrap-reverse flex-col md:flex-row justify-between">
+        <div v-if="contacts.length" class="bg-gray-100 rounded-md mt-2 p-2 flex flex-wrap-reverse flex-col md:flex-row justify-between">
             <div class="md:m-0 mb-4 mt-2 text-center">
                 Show
                 <select class="p-2 rounded-md">
@@ -67,6 +67,7 @@ export default {
     watch: {
         searchQuery(query) {
             if(query == '') {
+                this.contacts = [];
                 return;
             }
 
