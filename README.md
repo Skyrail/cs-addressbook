@@ -8,6 +8,12 @@ Uses Composer - which should setup everything from Laravel + other PHP libs
 
 ## Installing
 
+## Developing with
+
+Uses Laravel Mix via NPM watch to compile SASS and JS files (e.g. for Vue.js)
+
+`npm run watch`
+
 ## Running
 
 Simplest way is using Artisan's server
