@@ -20,9 +20,7 @@
             <div class="md:m-0 mb-4 mt-2 text-center">
                 Show
                 <select class="p-2 rounded-md" v-model="displayCount">
-                    <option value=5>5</option>
-                    <option value=10>10</option>
-                    <option value=25>25</option>
+                    <option v-for="count in displayCountOptions" :key="count" :value="count">{{count}}</option>
                 </select>
                 of {{contactCount}} contacts
             </div>
@@ -174,9 +172,6 @@ export default {
             this.searchTimeout = setTimeout(function(scope) {
                 scope.loadPage(1)
             }, 500, this);
-            //TODO: get data return - update contacts list
-            //TODO: using returned data update the contact count
-            //TODO: using returned data update the page number, number of pages etc.
         },
         displayCount() {
             this.loadPage(1)
