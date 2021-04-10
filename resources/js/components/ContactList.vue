@@ -24,16 +24,12 @@
                     <option>10</option>
                     <option>25</option>
                 </select>
-                of <span class="p-2 rounded-md bg-white text-yellow-600">{{contactCount}}</span> contacts
+                of {{contactCount}} contacts
             </div>
-            <div class="p-2 text-center">
-                <a href="#" class="text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white mr-2">Prev</a>
-                <a href="#" class="text-white bg-yellow-600 p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white mr-2">1</a>
-                <a href="#" class="text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white mr-2">2</a>
-                <span class="text-gray-600 bg-white p-2 px-4 rounded-md mr-2">...</span>
-                <a href="#" class="text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white mr-2">5</a>
-                <a href="#" class="text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white mr-2">{{pageCount}}</a>
-                <a href="#" class="text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white">Next</a>
+            <div v-if="contactCount > perPage" class="p-2 text-center">
+                <button v-if="pageNo != 1" @click="loadPage(this.pageNo - 1)" class="text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white mr-2">&lt;</button>
+                <button v-for="page in paginationArray" :key="page.pageNo" @click="page.pageNo != false && loadPage(page.pageNo)" :class="paginationClass(page)" class="p-2 px-4 rounded-md mr-2">{{(page.pageNo ? page.pageNo : '...')}}</button>
+                <button v-if="pageNo != pageCount" @click="loadPage(this.pageNo + 1)" class="text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white">&gt;</button>
             </div>
         </div>
     </div>
@@ -41,31 +37,134 @@
 
 <script>
 import ContactListItem from './ContactListItem.vue'
+import ContactListPagionation from './ContactListPagination.vue'
 
 export default {
     components: {
-        ContactListItem
+        ContactListItem,
+        ContactListPagionation
     },
     data() {
         return {
             contacts: [],
+            meta: [],
             pageNo: 1,
             perPage: 5,
             perPageOptions: [5, 10, 25],
             searchQuery: "",
-            searchTimeout: null
+            searchTimeout: null,
         };
+    },
+    methods: {
+        loadData() {
+            axios.get(`/api/contacts?query=${this.searchQuery}&per_page=${this.perPage}&page=${this.pageNo}`).then(response => (this.contacts = response.data.contacts, this.meta = response.data.meta))
+        },
+        loadPage(pageNumber) {
+            this.pageNo = pageNumber
+            this.loadData()
+        },
+        paginationClass(page) {
+            return {
+                'bg-yellow-600 text-white hover:bg-gray-700 hover:text-white ': page.currentPage, 
+                'text-yellow-600 bg-white hover:bg-gray-700 hover:text-white ': !page.currentPage && page.pageNo, 
+                'text-gray-600 bg-white ': !page.currentPage && !page.pageNo
+            }
+        }
     },
     computed: {
         contactCount() {
-            return this.contacts.length;
+            return this.meta.result_count;
         },
         pageCount() {
-            return 3;
+            return Math.ceil(this.contactCount / this.perPage)
+        },
+        nextPage() {
+            nextPage = this.pageNo + 1
+            return (nextPage <= this.pageCount) ? nextPage : this.pageCount 
+        },
+        previousPage() {
+            previousPage = this.pageNo - 1
+            return (previousPage > 0) ? previousPage : 0
+        },
+        paginationArray() {
+
+            if(this.pageCount == 1) {
+                return []
+            }
+
+            var paginationButtons = []
+
+            if(this.pageCount > 1 && this.pageCount <= 5) {
+                for(let page = 1; page <= this.pageCount; page++) {
+
+                    let paginationButton = {
+                        pageNo: page,
+                        currentPage: ((this.pageNo == page) ? true : false)
+                    }
+                    
+                    paginationButtons.push(paginationButton)
+                } 
+            }
+
+            if(this.pageCount > 5) {
+
+                // The first button is always the first page
+                paginationButtons.push({
+                    pageNo: 1,
+                    currentPage: (this.pageNo == 1) ? true : false
+                })
+
+                if(this.pageNo > 3) {
+                    // Add a spacer button between first page and the current set of pages
+                    paginationButtons.push({
+                        pageNo: false,
+                        currentPage: false
+                    })
+                }
+
+                var paginationButtonStart = 2
+                var paginationButtonEnd = 3
+
+                if(this.pageNo >= 3 && this.pageNo <= (this.pageCount - 2)) {
+                    paginationButtonStart = this.pageNo - 1
+                    paginationButtonEnd = this.pageNo + 1
+                } else if(this.pageNo > (this.pageCount - 2)) {
+                    paginationButtonStart = this.pageNo - 2
+                    paginationButtonEnd = this.pageCount - 1
+                }
+
+                for(let page = paginationButtonStart; page <= paginationButtonEnd; page++) {
+
+                    let paginationButton = {
+                        pageNo: page,
+                        currentPage: (this.pageNo == page) ? true : false
+                    }
+
+                    paginationButtons.push(paginationButton)
+                } 
+
+                if(this.pageNo < (this.pageCount - 2)) {
+                    // Add a spacer button between last page and the current set of pages
+                    paginationButtons.push({
+                        pageNo: false,
+                        currentPage: false
+                    })
+                }
+
+                // The last button is always the final page
+                paginationButtons.push({
+                    pageNo: this.pageCount,
+                    currentPage: (this.pageNo == this.pageCount) ? true : false
+                })
+            }
+
+            return paginationButtons    
         }
     },
     watch: {
         searchQuery(query) {
+            this.searchQuery = query
+
             if(query == '') {
                 this.contacts = [];
                 return;
@@ -74,7 +173,7 @@ export default {
             clearTimeout(this.searchTimeout)
 
             this.searchTimeout = setTimeout(function(scope) {
-                axios.get(`/api/contacts?query=${query}&per_page=${scope.perPage}&page=${scope.pageNo}`).then(response => (scope.contacts = response.data.contacts))
+                scope.loadPage(1)
             }, 500, this);
             //TODO: get data return - update contacts list
             //TODO: using returned data update the contact count
