@@ -31,10 +31,10 @@ class ApiContactRepository implements ContactRepositoryInterface
         ]);
 
         if($result->getStatusCode() == 200) {
-            $contact = new Contact();
-            $this->populateContact($contact, $result);
 
-            foreach ($result->contacts as $contact_data) {
+            $result_data = json_decode($result->getBody()->getContents());
+
+            foreach ($result_data->contacts as $contact_data) {
                 $contact = new Contact();
                 $this->populateContact($contact, $contact_data);
                 $data['contacts'][] = $contact;
@@ -64,10 +64,10 @@ class ApiContactRepository implements ContactRepositoryInterface
         $result = $this->api->get('/addressbook/contacts');
 
         if($result->getStatusCode() == 200) {
-            $contact = new Contact();
-            $this->populateContact($contact, $result);
 
-            foreach ($result->contacts as $contact_data) {
+            $result_data = json_decode($result->getBody()->getContents());
+
+            foreach ($result_data->contacts as $contact_data) {
                 $contact = new Contact();
                 $this->populateContact($contact, $contact_data);
                 $data['contacts'][] = $contact;
@@ -99,7 +99,7 @@ class ApiContactRepository implements ContactRepositoryInterface
 
         if($result->getStatusCode() == 200) {
             $contact = new Contact();
-            $this->populateContact($contact, $result);
+            $this->populateContact($contact, json_decode($result->getBody()->getContents()));
 
             $data['code'] = 200;
             $data['contact'] = $contact;
