@@ -42,9 +42,9 @@ class ApiContactRepository implements ContactRepositoryInterface
 
             $data['code'] = 200;
             $data['meta'] = [
-                'page' => $result->pagination->page,
-                'per_page' => $result->pagination->per_page,
-                'result_count' => $result->pagination->no_results
+                'page' => $result_data->pagination->page,
+                'per_page' => $result_data->pagination->per_page,
+                'result_count' => $result_data->pagination->no_results
             ];
         } else {
             $data['error'] = json_decode($result->getBody()->getContents())->error->message;
@@ -75,9 +75,9 @@ class ApiContactRepository implements ContactRepositoryInterface
 
             $data['code'] = 200;
             $data['meta'] = [
-                'page' => $result->pagination->page,
-                'per_page' => $result->pagination->per_page,
-                'result_count' => $result->pagination->no_results
+                'page' => $result_data->pagination->page,
+                'per_page' => $result_data->pagination->per_page,
+                'result_count' => $result_data->pagination->no_results
             ];
         } else {
             $data['error'] = json_decode($result->getBody()->getContents())->error->message;
