@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 
 class ChurchSuiteService
 {
@@ -46,20 +47,22 @@ class ChurchSuiteService
      * 
      * @param string $endpoint - the API endpoint to GET
      * @param array $data - query data will be appended to the end of the given endpoint after a ?
-     * @return stdObject 
+     * @return 
      */
     public function get(string $endpoint, array $data = [])
     {
         $endpoint = ltrim($endpoint, '/');
 
-        $response = $this->client->request('GET', $endpoint, [
-            'query' => $data,
-            'headers' => $this->auth_headers
-        ]);
+        try {
+            $response = $this->client->request('GET', $endpoint, [
+                'query' => $data,
+                'headers' => $this->auth_headers
+            ]);
+        } catch (RequestException $e) {
+            //Typically would log something here but for the purposes of this exercise, pass the response forward 
+            $response = $e->getResponse();
+        }
 
-        #TODO: Handle errors? Check status code?
-
-        #TODO: Is this the best way to do this?
-        return json_decode($response->getBody()->getContents());
+        return $response;
     }
 }

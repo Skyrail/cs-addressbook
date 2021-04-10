@@ -30,16 +30,25 @@ class ApiContactRepository implements ContactRepositoryInterface
             'per_page' => $per_page
         ]);
 
-        $data['meta'] = [
-            'page' => $result->pagination->page,
-            'per_page' => $result->pagination->per_page,
-            'result_count' => $result->pagination->no_results
-        ];
-
-        foreach ($result->contacts as $contact_data) {
+        if($result->getStatusCode() == 200) {
             $contact = new Contact();
-            $this->populateContact($contact, $contact_data);
-            $data['contacts'][] = $contact;
+            $this->populateContact($contact, $result);
+
+            foreach ($result->contacts as $contact_data) {
+                $contact = new Contact();
+                $this->populateContact($contact, $contact_data);
+                $data['contacts'][] = $contact;
+            }
+
+            $data['code'] = 200;
+            $data['meta'] = [
+                'page' => $result->pagination->page,
+                'per_page' => $result->pagination->per_page,
+                'result_count' => $result->pagination->no_results
+            ];
+        } else {
+            $data['error'] = json_decode($result->getBody()->getContents())->error->message;
+            $data['code'] = $result->getStatusCode();
         }
 
         return $data;
@@ -50,18 +59,29 @@ class ApiContactRepository implements ContactRepositoryInterface
      */
     public function findAll()
     {
+        $data = [];
+
         $result = $this->api->get('/addressbook/contacts');
 
-        $data['meta'] = [
-            'page' => $result->pagination->page,
-            'per_page' => $result->pagination->per_page,
-            'result_count' => $result->pagination->no_results
-        ];
-
-        foreach ($result->contacts as $contact_data) {
+        if($result->getStatusCode() == 200) {
             $contact = new Contact();
-            $this->populateContact($contact, $contact_data);
-            $data['contacts'][] = $contact;
+            $this->populateContact($contact, $result);
+
+            foreach ($result->contacts as $contact_data) {
+                $contact = new Contact();
+                $this->populateContact($contact, $contact_data);
+                $data['contacts'][] = $contact;
+            }
+
+            $data['code'] = 200;
+            $data['meta'] = [
+                'page' => $result->pagination->page,
+                'per_page' => $result->pagination->per_page,
+                'result_count' => $result->pagination->no_results
+            ];
+        } else {
+            $data['error'] = json_decode($result->getBody()->getContents())->error->message;
+            $data['code'] = $result->getStatusCode();
         }
 
         return $result;
@@ -73,12 +93,22 @@ class ApiContactRepository implements ContactRepositoryInterface
      */
     public function findById(int $contact_id)
     {
+        $data = [];
+
         $result = $this->api->get('/addressbook/contact/' . $contact_id);
 
-        $contact = new Contact();
-        $this->populateContact($contact, $result);
+        if($result->getStatusCode() == 200) {
+            $contact = new Contact();
+            $this->populateContact($contact, $result);
 
-        return $result;
+            $data['code'] = 200;
+            $data['contact'] = $contact;
+        } else {
+            $data['error'] = json_decode($result->getBody()->getContents())->error->message;
+            $data['code'] = $result->getStatusCode();
+        }
+
+        return $data;
     }
 
     private function populateContact(Contact &$contact, $contact_data)
