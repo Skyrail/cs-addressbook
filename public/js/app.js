@@ -16299,8 +16299,8 @@ __webpack_require__.r(__webpack_exports__);
       contacts: [],
       meta: [],
       pageNo: 1,
-      perPage: 5,
-      perPageOptions: [5, 10, 25],
+      displayCount: 5,
+      displayCountOptions: [5, 10, 25],
       searchQuery: "",
       searchTimeout: null
     };
@@ -16309,7 +16309,7 @@ __webpack_require__.r(__webpack_exports__);
     loadData: function loadData() {
       var _this = this;
 
-      axios.get("/api/contacts?query=".concat(this.searchQuery, "&per_page=").concat(this.perPage, "&page=").concat(this.pageNo)).then(function (response) {
+      axios.get("/api/contacts?query=".concat(this.searchQuery, "&per_page=").concat(this.displayCount, "&page=").concat(this.pageNo)).then(function (response) {
         return _this.contacts = response.data.contacts, _this.meta = response.data.meta;
       });
     },
@@ -16330,7 +16330,7 @@ __webpack_require__.r(__webpack_exports__);
       return this.meta.result_count;
     },
     pageCount: function pageCount() {
-      return Math.ceil(this.contactCount / this.perPage);
+      return Math.ceil(this.contactCount / this.displayCount);
     },
     nextPage: function (_nextPage) {
       function nextPage() {
@@ -16444,6 +16444,9 @@ __webpack_require__.r(__webpack_exports__);
       }, 500, this); //TODO: get data return - update contacts list
       //TODO: using returned data update the contact count
       //TODO: using returned data update the page number, number of pages etc.
+    },
+    displayCount: function displayCount() {
+      this.loadPage(1);
     }
   }
 });
@@ -16718,13 +16721,25 @@ var _hoisted_6 = {
 
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Show ");
 
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
-  "class": "p-2 rounded-md"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", null, "5"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", null, "10"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", null, "25")], -1
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
+  value: "5"
+}, "5", -1
 /* HOISTED */
 );
 
-var _hoisted_9 = {
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
+  value: "10"
+}, "10", -1
+/* HOISTED */
+);
+
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
+  value: "25"
+}, "25", -1
+/* HOISTED */
+);
+
+var _hoisted_11 = {
   key: 0,
   "class": "p-2 text-center"
 };
@@ -16752,11 +16767,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , ["contact"]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.contacts.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [_hoisted_7, _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" of " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.contactCount) + " contacts ", 1
+  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.contacts.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+    "class": "p-2 rounded-md",
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $data.displayCount = $event;
+    })
+  }, [_hoisted_8, _hoisted_9, _hoisted_10], 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.displayCount]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" of " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.contactCount) + " contacts ", 1
   /* TEXT */
-  )]), $options.contactCount > $data.perPage ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_9, [$data.pageNo != 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
+  )]), $options.contactCount > $data.displayCount ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_11, [$data.pageNo != 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
     key: 0,
-    onClick: _cache[2] || (_cache[2] = function ($event) {
+    onClick: _cache[3] || (_cache[3] = function ($event) {
       return $options.loadPage(_this.pageNo - 1);
     }),
     "class": "text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white mr-2"
@@ -16774,7 +16796,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* KEYED_FRAGMENT */
   )), $data.pageNo != $options.pageCount ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
     key: 1,
-    onClick: _cache[3] || (_cache[3] = function ($event) {
+    onClick: _cache[4] || (_cache[4] = function ($event) {
       return $options.loadPage(_this.pageNo + 1);
     }),
     "class": "text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white"

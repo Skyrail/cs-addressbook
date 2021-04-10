@@ -19,14 +19,14 @@
         <div v-if="contacts.length" class="bg-gray-100 rounded-md mt-2 p-2 flex flex-wrap-reverse flex-col md:flex-row justify-between">
             <div class="md:m-0 mb-4 mt-2 text-center">
                 Show
-                <select class="p-2 rounded-md">
-                    <option>5</option>
-                    <option>10</option>
-                    <option>25</option>
+                <select class="p-2 rounded-md" v-model="displayCount">
+                    <option value=5>5</option>
+                    <option value=10>10</option>
+                    <option value=25>25</option>
                 </select>
                 of {{contactCount}} contacts
             </div>
-            <div v-if="contactCount > perPage" class="p-2 text-center">
+            <div v-if="contactCount > displayCount" class="p-2 text-center">
                 <button v-if="pageNo != 1" @click="loadPage(this.pageNo - 1)" class="text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white mr-2">&lt;</button>
                 <button v-for="page in paginationArray" :key="page.pageNo" @click="page.pageNo != false && loadPage(page.pageNo)" :class="paginationClass(page)" class="p-2 px-4 rounded-md mr-2">{{(page.pageNo ? page.pageNo : '...')}}</button>
                 <button v-if="pageNo != pageCount" @click="loadPage(this.pageNo + 1)" class="text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white">&gt;</button>
@@ -49,15 +49,15 @@ export default {
             contacts: [],
             meta: [],
             pageNo: 1,
-            perPage: 5,
-            perPageOptions: [5, 10, 25],
+            displayCount: 5,
+            displayCountOptions: [5, 10, 25],
             searchQuery: "",
             searchTimeout: null,
         };
     },
     methods: {
         loadData() {
-            axios.get(`/api/contacts?query=${this.searchQuery}&per_page=${this.perPage}&page=${this.pageNo}`).then(response => (this.contacts = response.data.contacts, this.meta = response.data.meta))
+            axios.get(`/api/contacts?query=${this.searchQuery}&per_page=${this.displayCount}&page=${this.pageNo}`).then(response => (this.contacts = response.data.contacts, this.meta = response.data.meta))
         },
         loadPage(pageNumber) {
             this.pageNo = pageNumber
@@ -76,7 +76,7 @@ export default {
             return this.meta.result_count;
         },
         pageCount() {
-            return Math.ceil(this.contactCount / this.perPage)
+            return Math.ceil(this.contactCount / this.displayCount)
         },
         nextPage() {
             nextPage = this.pageNo + 1
@@ -159,8 +159,7 @@ export default {
             }
 
             return paginationButtons    
-        }
-    },
+        }    },
     watch: {
         searchQuery(query) {
             this.searchQuery = query
@@ -178,7 +177,11 @@ export default {
             //TODO: get data return - update contacts list
             //TODO: using returned data update the contact count
             //TODO: using returned data update the page number, number of pages etc.
+        },
+        displayCount() {
+            this.loadPage(1)
         }
+
     }
     };
 </script>
