@@ -13,7 +13,7 @@
     </div>
     <div class="divide-y divide-gray-200 bg-gray-100 rounded-md p-2" v-if="contacts.length">
 
-        <contact-list-item v-for="contact in contacts" :key="contact.id" :contact="contact"></contact-list-item>
+        <contact-list-item v-for="contact in contacts" :key="contact.id" :contact="contact" @click="showContactDetail(contact.id)"></contact-list-item>
     
     </div>
         <div v-if="contacts.length" class="bg-gray-100 rounded-md mt-2 p-2 flex flex-wrap-reverse flex-col md:flex-row justify-between">
@@ -31,16 +31,17 @@
             </div>
         </div>
     </div>
+    <contact-detail ref="contactDetail"></contact-detail>
 </template>
 
 <script>
 import ContactListItem from './ContactListItem.vue'
-import ContactListPagionation from './ContactListPagination.vue'
+import ContactDetail from './ContactDetail.vue'
 
 export default {
     components: {
         ContactListItem,
-        ContactListPagionation
+        ContactDetail
     },
     data() {
         return {
@@ -67,6 +68,9 @@ export default {
                 'text-yellow-600 bg-white hover:bg-gray-700 hover:text-white ': !page.currentPage && page.pageNo, 
                 'text-gray-600 bg-white ': !page.currentPage && !page.pageNo
             }
+        },
+        showContactDetail(contactId) {
+            this.$refs.contactDetail.showContactDetail(contactId)
         }
     },
     computed: {
