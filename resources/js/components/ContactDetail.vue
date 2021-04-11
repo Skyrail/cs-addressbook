@@ -30,10 +30,10 @@
                         <img :src="contact.images.thumb.url" alt="" class="w-16 h-16 rounded-full mr-2 bg-gray-100">
                         <div>
                             <span class="font-bold block">
-                                <span v-if="contact.title">{{contact.title}} </span>{{contact.first_name}} <span v-if="contact.last_name">{{contact.last_name}}</span>
+                                <span v-if="contact.title">{{contact.title}}. </span>{{contact.first_name}} <span v-if="contact.last_name">{{contact.last_name}}</span>
                             </span>
                             <div class="text-sm">
-                                <span class="block" v-if="contact.date_of_birth">{{contact.date_of_birth}}</span>
+                                <span class="block" v-if="contact.date_of_birth">{{contactDateOfBirth}}</span>
                                 <span class="block" v-if="contact.marital">{{contact.marital}}</span>
                                 <span class="block" v-if="contact.job || contact.employer">
                                     Works <span v-if="contact.job">as {{contact.job}}</span><span v-if="contact.employer"> at {{contact.employer}}</span>
@@ -45,7 +45,14 @@
                     <div class="bg-gray-100 my-2 rounded-md p-2">
 
                         <div class="mb-2" v-if="contact.email">
-                            <h3 class="text-md font-semibold">E-Mail Address</h3>
+                            <h3 class="text-md font-semibold">
+                                E-Mail Address
+                                <span v-if="contact.communication.general_email == 1" class="font-bold text-orange">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </span>
+                            </h3>
                             <div class="p-2 my-2 rounded-md bg-indigo text-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 inline-block">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -149,11 +156,18 @@ export default {
         },
         closeModal() {
             this.displayContactDetail = false
-        }    
+        }
     },
     computed: {
         contactHasAddress() {
             return (this.contact.address || this.contact.address2 || this.contact.address3 || this.contact.city || this.contact.county || this.contact.postcode)
+        },
+        contactDateOfBirth() {
+            if(this.contact.date_of_birth) {
+                let dob = new Date(this.contact.date_of_birth)
+
+                return dob.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })
+            }
         }
     }
 };

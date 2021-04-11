@@ -10,6 +10,7 @@ import { createApp } from "vue"
 import ContactList from './components/ContactList.vue'
 import ContactDetail from './components/ContactDetail.vue'
 
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
