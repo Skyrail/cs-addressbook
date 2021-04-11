@@ -16386,14 +16386,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _ContactListItem_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ContactListItem.vue */ "./resources/js/components/ContactListItem.vue");
-/* harmony import */ var _ContactDetail_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ContactDetail.vue */ "./resources/js/components/ContactDetail.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _ContactListItem_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ContactListItem.vue */ "./resources/js/components/ContactListItem.vue");
+/* harmony import */ var _ContactDetail_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ContactDetail.vue */ "./resources/js/components/ContactDetail.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    ContactListItem: _ContactListItem_vue__WEBPACK_IMPORTED_MODULE_0__.default,
-    ContactDetail: _ContactDetail_vue__WEBPACK_IMPORTED_MODULE_1__.default
+    ContactListItem: _ContactListItem_vue__WEBPACK_IMPORTED_MODULE_1__.default,
+    ContactDetail: _ContactDetail_vue__WEBPACK_IMPORTED_MODULE_2__.default
   },
   data: function data() {
     return {
@@ -16404,22 +16412,54 @@ __webpack_require__.r(__webpack_exports__);
       displayCountOptions: [5, 10, 25],
       searchQuery: "",
       searchTimeout: null,
-      isLoading: true
+      isLoading: false
     };
   },
   methods: {
-    loadData: function loadData() {
-      var _this = this;
-
-      //TODO: handle errors - change to use await/async?
-      axios.get("/api/contacts?query=".concat(this.searchQuery, "&per_page=").concat(this.displayCount, "&page=").concat(this.pageNo)).then(function (response) {
-        return _this.contacts = response.data.contacts, _this.meta = response.data.meta;
-      });
+    loadListData: function loadListData() {
+      this.isLoading = true;
+      return axios.get("/api/contacts?query=".concat(this.searchQuery, "&per_page=").concat(this.displayCount, "&page=").concat(this.pageNo)); //.then(response => (this.contacts = response.data.contacts, this.meta = response.data.meta))
     },
     loadPage: function loadPage(pageNumber) {
-      this.pageNo = pageNumber;
-      this.loadData();
-      this.isLoading = false;
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _this.pageNo = pageNumber;
+                _context.next = 4;
+                return _this.loadListData();
+
+              case 4:
+                response = _context.sent;
+
+                if (response.data.code == 200) {
+                  _this.contacts = response.data.contacts;
+                  _this.meta = response.data.meta;
+                } else {//TODO: Display error
+                }
+
+                _this.isLoading = false;
+                _context.next = 12;
+                break;
+
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](0);
+                //TODO: Handle/display errors
+                console.log(_context.t0);
+
+              case 12:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[0, 9]]);
+      }))();
     },
     paginationClass: function paginationClass(page) {
       return {
@@ -16545,7 +16585,9 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      clearTimeout(this.searchTimeout);
+      clearTimeout(this.searchTimeout); // Although this is setup in the loadPage function we add a after each key press before we fire off
+      // the request so not to send off too many requests while a person is typing
+
       this.isLoading = true;
       this.searchTimeout = setTimeout(function (scope) {
         scope.loadPage(1);

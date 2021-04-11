@@ -57,18 +57,33 @@ export default {
             displayCountOptions: [5, 10, 25],
             searchQuery: "",
             searchTimeout: null,
-            isLoading: true
+            isLoading: false
         };
     },
     methods: {
-        loadData() {
-            //TODO: handle errors - change to use await/async?
-            axios.get(`/api/contacts?query=${this.searchQuery}&per_page=${this.displayCount}&page=${this.pageNo}`).then(response => (this.contacts = response.data.contacts, this.meta = response.data.meta))
+        loadListData() {
+            this.isLoading = true
+            return axios.get(`/api/contacts?query=${this.searchQuery}&per_page=${this.displayCount}&page=${this.pageNo}`)
+            //.then(response => (this.contacts = response.data.contacts, this.meta = response.data.meta))
         },
-        loadPage(pageNumber) {
-            this.pageNo = pageNumber
-            this.loadData()
-            this.isLoading = false
+        async loadPage(pageNumber) {
+
+            try {
+                this.pageNo = pageNumber
+                const response = await this.loadListData()
+
+                if(response.data.code == 200) {
+                    this.contacts = response.data.contacts
+                    this.meta = response.data.meta
+                } else {
+                    //TODO: Display error
+                }
+                this.isLoading = false
+            } catch (ex) {
+                //TODO: Handle/display errors
+                console.log(ex)
+
+            }
         },
         paginationClass(page) {
             return {
@@ -180,6 +195,9 @@ export default {
             }
 
             clearTimeout(this.searchTimeout)
+
+            // Although this is setup in the loadPage function we add a after each key press before we fire off
+            // the request so not to send off too many requests while a person is typing
             this.isLoading = true
 
             this.searchTimeout = setTimeout(function(scope) {
