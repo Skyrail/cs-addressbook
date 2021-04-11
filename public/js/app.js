@@ -16311,7 +16311,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       contactIsLoaded: false,
       isLoading: false,
       error: '',
-      displayContactDetail: true
+      displayContactDetail: false
     };
   },
   methods: {
@@ -16375,6 +16375,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   computed: {
     contactHasAddress: function contactHasAddress() {
       return this.contact.address || this.contact.address2 || this.contact.address3 || this.contact.city || this.contact.county || this.contact.postcode;
+    },
+    contactHasOptedOut: function contactHasOptedOut() {
+      return this.contact.communication.post == 0 || this.contact.communication.general_email == 0 || this.contact.communication.telephone == 0;
     },
     contactDateOfBirth: function contactDateOfBirth() {
       if (this.contact.date_of_birth) {
@@ -16749,7 +16752,7 @@ var _hoisted_28 = {
 
 var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("svg", {
   xmlns: "http://www.w3.org/2000/svg",
-  "class": "h-4 w-4 inline-block",
+  "class": "h-4 w-4 inline-block mb-1",
   fill: "none",
   viewBox: "0 0 24 24",
   stroke: "currentColor"
@@ -16771,7 +16774,7 @@ var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
   fill: "none",
   viewBox: "0 0 24 24",
   stroke: "currentColor",
-  "class": "h-4 w-4 inline-block"
+  "class": "h-4 w-4 inline-block mb-1"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("path", {
   "stroke-linecap": "round",
   "stroke-linejoin": "round",
@@ -16798,7 +16801,7 @@ var _hoisted_35 = {
 
 var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("svg", {
   xmlns: "http://www.w3.org/2000/svg",
-  "class": "h-4 w-4 inline-block",
+  "class": "h-4 w-4 inline-block mb-1",
   fill: "none",
   viewBox: "0 0 24 24",
   stroke: "currentColor"
@@ -16821,7 +16824,7 @@ var _hoisted_38 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
   fill: "none",
   viewBox: "0 0 24 24",
   stroke: "currentColor",
-  "class": "h-4 w-4 inline-block"
+  "class": "h-4 w-4 inline-block mb-1"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("path", {
   "stroke-linecap": "round",
   "stroke-linejoin": "round",
@@ -16838,7 +16841,7 @@ var _hoisted_39 = {
 
 var _hoisted_40 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("svg", {
   xmlns: "http://www.w3.org/2000/svg",
-  "class": "h-4 w-4 inline-block",
+  "class": "h-4 w-4 inline-block mb-1",
   fill: "none",
   viewBox: "0 0 24 24",
   stroke: "currentColor"
@@ -16858,7 +16861,7 @@ var _hoisted_41 = {
 
 var _hoisted_42 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("svg", {
   xmlns: "http://www.w3.org/2000/svg",
-  "class": "h-4 w-4 inline-block",
+  "class": "h-4 w-4 inline-block mb-1",
   fill: "none",
   viewBox: "0 0 24 24",
   stroke: "currentColor"
@@ -16888,7 +16891,7 @@ var _hoisted_46 = {
 
 var _hoisted_47 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("svg", {
   xmlns: "http://www.w3.org/2000/svg",
-  "class": "h-4 w-4 inline-block",
+  "class": "h-4 w-4 inline-block mb-1",
   fill: "none",
   viewBox: "0 0 24 24",
   stroke: "currentColor"
@@ -16907,7 +16910,7 @@ var _hoisted_48 = {
 
 var _hoisted_49 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("svg", {
   xmlns: "http://www.w3.org/2000/svg",
-  "class": "h-4 w-4 inline-block",
+  "class": "h-4 w-4 inline-block align-top mt-1",
   fill: "none",
   viewBox: "0 0 24 24",
   stroke: "currentColor"
@@ -16923,6 +16926,56 @@ var _hoisted_49 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 var _hoisted_50 = {
   "class": "whitespace-pre-line inline-block px-2"
 };
+var _hoisted_51 = {
+  key: 0,
+  "class": "block"
+};
+var _hoisted_52 = {
+  key: 1,
+  "class": "block"
+};
+var _hoisted_53 = {
+  key: 2,
+  "class": "block"
+};
+var _hoisted_54 = {
+  key: 3,
+  "class": "block"
+};
+var _hoisted_55 = {
+  key: 4,
+  "class": "block"
+};
+var _hoisted_56 = {
+  key: 5,
+  "class": "block"
+};
+var _hoisted_57 = {
+  key: 0,
+  "class": "p-2 rounded-md mt-2 text-sm bg-gray-100"
+};
+
+var _hoisted_58 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+  "class": "font-bold text-orange"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("svg", {
+  xmlns: "http://www.w3.org/2000/svg",
+  "class": "h-4 w-4 inline-block mb-1",
+  fill: "none",
+  viewBox: "0 0 24 24",
+  stroke: "currentColor"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("path", {
+  "stroke-linecap": "round",
+  "stroke-linejoin": "round",
+  "stroke-width": "2",
+  d: "M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+})])], -1
+/* HOISTED */
+);
+
+var _hoisted_59 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, " The user has not opted-in to this form of commmunication", -1
+/* HOISTED */
+);
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Transition, {
     name: "fade"
@@ -16963,9 +17016,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* TEXT */
       )])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.contact.work_telephone ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_41, [_hoisted_42, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.contact.work_telephone), 1
       /* TEXT */
-      )])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.contactHasAddress ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h3", _hoisted_44, [_hoisted_45, $data.contact.communication.post != 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_46, [_hoisted_47])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_48, [_hoisted_49, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_50, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.contact.address) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.contact.address2) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.contact.address3) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.contact.city) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.contact.county) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.contact.postcode), 1
+      )])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.contactHasAddress ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h3", _hoisted_44, [_hoisted_45, $data.contact.communication.post != 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_46, [_hoisted_47])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_48, [_hoisted_49, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_50, [$data.contact.address ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_51, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.contact.address), 1
       /* TEXT */
-      )])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.contact.address2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_52, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.contact.address2), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.contact.address3 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_53, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.contact.address3), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.contact.city ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_54, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.contact.city), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.contact.county ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_55, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.contact.county), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.contact.postcode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_56, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.contact.postcode), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), $options.contactHasOptedOut ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_57, [_hoisted_58, _hoisted_59])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
     }),
     _: 1
     /* STABLE */
@@ -17126,14 +17189,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[3] || (_cache[3] = function ($event) {
       return $options.loadPage(_this.pageNo - 1);
     }),
-    "class": "text-indigo bg-white p-2 px-4 rounded-md hover:bg-darkgrey hover:text-white mr-2"
+    "class": "text-indigo bg-white py-2 px-4 rounded-md hover:bg-darkgrey hover:text-white mr-2 hidden sm:inline-block"
   }, "<")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.paginationArray, function (page) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
       key: page.pageNo,
       onClick: function onClick($event) {
         return page.pageNo != false && $options.loadPage(page.pageNo);
       },
-      "class": [$options.paginationClass(page), "p-2 px-4 rounded-md mr-2"]
+      "class": [$options.paginationClass(page), "p-2 sm:px-4 rounded-md mr-2"]
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(page.pageNo ? page.pageNo : '...'), 11
     /* TEXT, CLASS, PROPS */
     , ["onClick"]);
@@ -17144,7 +17207,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[4] || (_cache[4] = function ($event) {
       return $options.loadPage(_this.pageNo + 1);
     }),
-    "class": "text-indigo bg-white p-2 px-4 rounded-md hover:bg-darkgrey hover:text-white"
+    "class": "text-indigo bg-white py-2 px-4 rounded-md hover:bg-darkgrey hover:text-white hidden sm:inline-block"
   }, ">")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_contact_detail, {
     ref: "contactDetail"
   }, null, 512

@@ -40,9 +40,9 @@
                 of {{contactCount}} contacts
             </div>
             <div v-if="contactCount > displayCount" class="p-2 text-center">
-                <button v-if="pageNo != 1" @click="loadPage(this.pageNo - 1)" class="text-indigo bg-white p-2 px-4 rounded-md hover:bg-darkgrey hover:text-white mr-2">&lt;</button>
-                <button v-for="page in paginationArray" :key="page.pageNo" @click="page.pageNo != false && loadPage(page.pageNo)" :class="paginationClass(page)" class="p-2 px-4 rounded-md mr-2">{{(page.pageNo ? page.pageNo : '...')}}</button>
-                <button v-if="pageNo != pageCount" @click="loadPage(this.pageNo + 1)" class="text-indigo bg-white p-2 px-4 rounded-md hover:bg-darkgrey hover:text-white">&gt;</button>
+                <button v-if="pageNo != 1" @click="loadPage(this.pageNo - 1)" class="text-indigo bg-white py-2 px-4 rounded-md hover:bg-darkgrey hover:text-white mr-2 hidden sm:inline-block">&lt;</button>
+                <button v-for="page in paginationArray" :key="page.pageNo" @click="page.pageNo != false && loadPage(page.pageNo)" :class="paginationClass(page)" class="p-2 sm:px-4 rounded-md mr-2">{{(page.pageNo ? page.pageNo : '...')}}</button>
+                <button v-if="pageNo != pageCount" @click="loadPage(this.pageNo + 1)" class="text-indigo bg-white py-2 px-4 rounded-md hover:bg-darkgrey hover:text-white hidden sm:inline-block">&gt;</button>
             </div>
         </div>
     </div>
