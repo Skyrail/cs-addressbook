@@ -17,6 +17,9 @@ module.exports = {
         orange: '#f4640b',
         softgreen: '#61bea3',
         purple: '#a7509f'
+      },
+      minHeight: {
+        '12': '3rem'
       }
     }
   },

@@ -16414,13 +16414,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       displayCountOptions: [5, 10, 25],
       searchQuery: "",
       searchTimeout: null,
-      isLoading: false
+      isLoading: false,
+      error: ''
     };
   },
   methods: {
     loadListData: function loadListData() {
       this.isLoading = true;
-      return axios.get("/api/contacts?query=".concat(this.searchQuery, "&per_page=").concat(this.displayCount, "&page=").concat(this.pageNo)); //.then(response => (this.contacts = response.data.contacts, this.meta = response.data.meta))
+      this.error = '';
+      return axios.get("/api/contacts?query=".concat(this.searchQuery, "&per_page=").concat(this.displayCount, "&page=").concat(this.pageNo));
     },
     loadPage: function loadPage(pageNumber) {
       var _this = this;
@@ -16440,22 +16442,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context.sent;
 
                 if (response.data.code == 200) {
-                  _this.contacts = response.data.contacts;
+                  if (response.data.meta.result_count > 0) {
+                    _this.contacts = response.data.contacts;
+                  } else {
+                    _this.contacts = [];
+                  }
+
                   _this.meta = response.data.meta;
-                } else {//TODO: Display error
+                } else {
+                  _this.error = response.data.error;
                 }
 
                 _this.isLoading = false;
-                _context.next = 12;
+                _context.next = 13;
                 break;
 
               case 9:
                 _context.prev = 9;
                 _context.t0 = _context["catch"](0);
-                //TODO: Handle/display errors
-                console.log(_context.t0);
+                _this.error = 'Unfortunately an error occured loading contact details. Please refresh the page and try again.';
+                _this.isLoading = false;
 
-              case 12:
+              case 13:
               case "end":
                 return _context.stop();
             }
@@ -16481,34 +16489,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     pageCount: function pageCount() {
       return Math.ceil(this.contactCount / this.displayCount);
     },
-    nextPage: function (_nextPage) {
-      function nextPage() {
-        return _nextPage.apply(this, arguments);
-      }
-
-      nextPage.toString = function () {
-        return _nextPage.toString();
-      };
-
-      return nextPage;
-    }(function () {
-      nextPage = this.pageNo + 1;
-      return nextPage <= this.pageCount ? nextPage : this.pageCount;
-    }),
-    previousPage: function (_previousPage) {
-      function previousPage() {
-        return _previousPage.apply(this, arguments);
-      }
-
-      previousPage.toString = function () {
-        return _previousPage.toString();
-      };
-
-      return previousPage;
-    }(function () {
-      previousPage = this.pageNo - 1;
-      return previousPage > 0 ? previousPage : 0;
-    }),
     paginationArray: function paginationArray() {
       if (this.pageCount == 1) {
         return [];
@@ -16587,7 +16567,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return;
       }
 
-      clearTimeout(this.searchTimeout); // Although this is setup in the loadPage function we add a after each key press before we fire off
+      clearTimeout(this.searchTimeout); // Although this is setup in the loadPage function we add a delay after each key press before we fire off
       // the request so not to send off too many requests while a person is typing
 
       this.isLoading = true;
@@ -16898,7 +16878,7 @@ var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 
 var _hoisted_4 = {
   key: 0,
-  "class": "relative divide-y divide-gray-200 bg-gray-100 rounded-md p-2"
+  "class": "relative divide-y divide-gray-200 bg-gray-100 rounded-md p-2 min-h-12"
 };
 var _hoisted_5 = {
   key: 0,
@@ -16906,22 +16886,30 @@ var _hoisted_5 = {
 };
 
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "self-center text-center w-100 m-2 flex-grow text-white text-1xl"
+  "class": "self-center text-center m-2 p-8 flex-grow text-white text-1xl"
 }, "Loading...", -1
 /* HOISTED */
 );
 
 var _hoisted_7 = {
+  key: 0,
+  "class": "bg-orange text-white p-2 m-2 text-center rounded-md"
+};
+var _hoisted_8 = {
+  key: 0,
+  "class": "bg-indigo text-white p-2 m-2 text-center rounded-md"
+};
+var _hoisted_9 = {
   key: 1,
   "class": "bg-gray-100 rounded-md mt-2 p-2 flex flex-wrap-reverse flex-col md:flex-row justify-between"
 };
-var _hoisted_8 = {
+var _hoisted_10 = {
   "class": "md:m-0 md:mr-2 mb-2 mt-2 text-center self-center"
 };
 
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Show ");
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Show ");
 
-var _hoisted_10 = {
+var _hoisted_12 = {
   key: 0,
   "class": "p-2 text-center"
 };
@@ -16942,7 +16930,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     placeholder: "Search contacts"
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.searchQuery]])])])]), $data.contacts.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_4, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.contacts, function (contact) {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.searchQuery]])])])]), $data.contacts.length || $data.isLoading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_4, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.contacts, function (contact) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_contact_list_item, {
       key: contact.id,
       contact: contact,
@@ -16963,7 +16951,27 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  })])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.contacts.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+  })])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(vue__WEBPACK_IMPORTED_MODULE_0__.Transition, {
+    name: "fade"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [$data.error && !$data.isLoading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
+    }),
+    _: 1
+    /* STABLE */
+
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(vue__WEBPACK_IMPORTED_MODULE_0__.Transition, {
+    name: "fade"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [$data.searchQuery && !$data.isLoading && $options.contactCount == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_8, "No contacts found")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
+    }),
+    _: 1
+    /* STABLE */
+
+  }), $data.contacts.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
     "class": "p-2 rounded-md",
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
       return $data.displayCount = $event;
@@ -16981,7 +16989,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.displayCount]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" of " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.contactCount) + " contacts ", 1
   /* TEXT */
-  )]), $options.contactCount > $data.displayCount ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_10, [$data.pageNo != 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
+  )]), $options.contactCount > $data.displayCount ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_12, [$data.pageNo != 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
     key: 0,
     onClick: _cache[3] || (_cache[3] = function ($event) {
       return $options.loadPage(_this.pageNo - 1);
@@ -17033,15 +17041,24 @@ var _hoisted_1 = {
   "class": "flex items-center text-black p-4 hover:bg-white cursor-pointer"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
-    src: $props.contact.images.thumb.url,
-    alt: "",
-    "class": "w-6 h-6 rounded-full mr-2 bg-gray-100"
-  }, null, 8
-  /* PROPS */
-  , ["src"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.contact.first_name) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.contact.last_name), 1
-  /* TEXT */
-  )]);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Transition, {
+    name: "fade"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+        src: $props.contact.images.thumb.url,
+        alt: "",
+        "class": "w-6 h-6 rounded-full mr-2 bg-gray-100"
+      }, null, 8
+      /* PROPS */
+      , ["src"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.contact.first_name) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.contact.last_name), 1
+      /* TEXT */
+      )])];
+    }),
+    _: 1
+    /* STABLE */
+
+  });
 }
 
 /***/ }),

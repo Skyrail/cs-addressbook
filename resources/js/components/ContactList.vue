@@ -1,26 +1,36 @@
 <template>
-<div>
     <div>
-        <div class="py-4 text-base leading-6 space-y-4 text-darkgrey sm:text-lg sm:leading-7">
-            <form class="w-full relative">
-                <svg width="20" height="20" fill="currentColor" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-dovegrey">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
-                </svg>
+        <div>
+            <div class="py-4 text-base leading-6 space-y-4 text-darkgrey sm:text-lg sm:leading-7">
+                <form class="w-full relative">
+                    <svg width="20" height="20" fill="currentColor" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-dovegrey">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
+                    </svg>
 
-                <input v-model="searchQuery" class="focus:border-gray-300 focus:ring-1 focus:ring-gray-300 focus:outline-none w-full text-md placeholder-gray-400 border border-gray-200 rounded-md py-2 pl-10" type="text" aria-label="Search contacts" placeholder="Search contacts" />
-            </form>
+                    <input v-model="searchQuery" class="focus:border-gray-300 focus:ring-1 focus:ring-gray-300 focus:outline-none w-full text-md placeholder-gray-400 border border-gray-200 rounded-md py-2 pl-10" type="text" aria-label="Search contacts" placeholder="Search contacts" />
+                </form>
+            </div>
         </div>
-    </div>
-    <div class="relative divide-y divide-gray-200 bg-gray-100 rounded-md p-2" v-if="contacts.length">
+        <div class="relative divide-y divide-gray-200 bg-gray-100 rounded-md p-2 min-h-12" v-if="contacts.length || isLoading">
 
-        <contact-list-item v-for="contact in contacts" :key="contact.id" :contact="contact" @click="showContactDetail(contact.id)"></contact-list-item>
+            <contact-list-item v-for="contact in contacts" :key="contact.id" :contact="contact" @click="showContactDetail(contact.id)"></contact-list-item>
+
+            <transition name="fade">
+                <div class="bg-darkgrey bg-opacity-90 rounded-md absolute top-0 bottom-0 left-0 right-0 flex" v-if="isLoading">
+                    <div class="self-center text-center m-2 p-8 flex-grow text-white text-1xl">Loading...</div>
+                </div>
+            </transition>
+
+        </div>
 
         <transition name="fade">
-            <div class="bg-darkgrey bg-opacity-90 rounded-md absolute top-0 bottom-0 left-0 right-0 flex" v-if="isLoading">
-                <div class="self-center text-center w-100 m-2 flex-grow text-white text-1xl">Loading...</div>
-            </div>
+            <div class="bg-orange text-white p-2 m-2 text-center rounded-md" v-if="error && !isLoading">{{error}}</div>
         </transition>
-    </div>
+
+        <transition name="fade">
+            <div class="bg-indigo text-white p-2 m-2 text-center rounded-md" v-if="searchQuery && !isLoading && contactCount == 0">No contacts found</div>
+        </transition>
+
         <div v-if="contacts.length" class="bg-gray-100 rounded-md mt-2 p-2 flex flex-wrap-reverse flex-col md:flex-row justify-between">
             <div class="md:m-0 md:mr-2 mb-2 mt-2 text-center self-center">
                 Show
@@ -57,14 +67,15 @@ export default {
             displayCountOptions: [5, 10, 25],
             searchQuery: "",
             searchTimeout: null,
-            isLoading: false
+            isLoading: false,
+            error: ''
         };
     },
     methods: {
         loadListData() {
             this.isLoading = true
+            this.error = ''
             return axios.get(`/api/contacts?query=${this.searchQuery}&per_page=${this.displayCount}&page=${this.pageNo}`)
-            //.then(response => (this.contacts = response.data.contacts, this.meta = response.data.meta))
         },
         async loadPage(pageNumber) {
 
@@ -73,16 +84,19 @@ export default {
                 const response = await this.loadListData()
 
                 if(response.data.code == 200) {
-                    this.contacts = response.data.contacts
+                    if(response.data.meta.result_count > 0) {
+                        this.contacts = response.data.contacts
+                    } else {
+                        this.contacts = []
+                    }
                     this.meta = response.data.meta
                 } else {
-                    //TODO: Display error
+                    this.error = response.data.error
                 }
                 this.isLoading = false
             } catch (ex) {
-                //TODO: Handle/display errors
-                console.log(ex)
-
+                this.error = 'Unfortunately an error occured loading contact details. Please refresh the page and try again.'
+                this.isLoading = false
             }
         },
         paginationClass(page) {
@@ -102,14 +116,6 @@ export default {
         },
         pageCount() {
             return Math.ceil(this.contactCount / this.displayCount)
-        },
-        nextPage() {
-            nextPage = this.pageNo + 1
-            return (nextPage <= this.pageCount) ? nextPage : this.pageCount 
-        },
-        previousPage() {
-            previousPage = this.pageNo - 1
-            return (previousPage > 0) ? previousPage : 0
         },
         paginationArray() {
 
@@ -196,7 +202,7 @@ export default {
 
             clearTimeout(this.searchTimeout)
 
-            // Although this is setup in the loadPage function we add a after each key press before we fire off
+            // Although this is setup in the loadPage function we add a delay after each key press before we fire off
             // the request so not to send off too many requests while a person is typing
             this.isLoading = true
 
