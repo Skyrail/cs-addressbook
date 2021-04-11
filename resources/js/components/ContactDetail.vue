@@ -13,10 +13,12 @@
                     </button>
                 </header>
 
-                <div v-if="isLoading">
+                <div v-if="isLoading" class="roudned-md bg-indigo text-white p-2 rounded-md">
+                    <h3>
                     <!-- LOADING ICON -->
-                    <h3>Loading contact details...</h3>
-                    <img src="images/loading-icon.gif" />
+                    <img src="images/loading-icon.gif" class="inline-block w-8 h-8" />
+                    Loading contact details...
+                    </h3>
                 </div>
 
                 <div v-if="error" class="bg-orange text-white w-100 rounded-md p-4 mt-2 mb-2">
@@ -34,7 +36,7 @@
                             </span>
                             <div class="text-sm">
                                 <span class="block" v-if="contact.date_of_birth">{{contactDateOfBirth}}</span>
-                                <span class="block" v-if="contact.marital">{{contact.marital}}</span>
+                                <span class="block capitalize" v-if="contact.marital">{{contact.marital}}</span>
                                 <span class="block" v-if="contact.job || contact.employer">
                                     Works <span v-if="contact.job">as {{contact.job}}</span><span v-if="contact.employer"> at {{contact.employer}}</span>
                                 </span>
@@ -47,7 +49,7 @@
                         <div class="mb-2" v-if="contact.email">
                             <h3 class="text-md font-semibold">
                                 E-Mail Address
-                                <span v-if="contact.communication.general_email == 1" class="font-bold text-orange">
+                                <span v-if="contact.communication.general_email != 1" class="font-bold text-orange">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
@@ -62,7 +64,14 @@
                         </div>
 
                         <div class="my-2" v-if="contact.telephone || contact.mobile || contact.work_telephone">
-                            <h3 class="text-md font-semibold">Telephone Numbers</h3>
+                            <h3 class="text-md font-semibold">
+                                Telephone Numbers
+                                <span v-if="contact.communication.phone != 1" class="font-bold text-orange">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </span>
+                            </h3>
                             <div class="p-2 my-2 rounded-md bg-indigo text-white" v-if="contact.mobile">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 inline-block">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
@@ -85,7 +94,14 @@
                         </div>
 
                         <div class="my-2" v-if="contactHasAddress">
-                            <h3 class="text-md font-semibold">Address</h3>
+                            <h3 class="text-md font-semibold">
+                                Address
+                                <span v-if="contact.communication.post != 1" class="font-bold text-orange">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </span>
+                            </h3>
                             <div class="p-2 my-2 rounded-md bg-indigo text-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -133,6 +149,8 @@ export default {
                 this.contactIsLoaded = false
                 this.contact = {}
 
+                this.displayContactDetail = true
+
                 const response = await this.loadContactData(contactId)
 
                 if(response.data.code == 200) {
@@ -144,9 +162,7 @@ export default {
                     this.isLoading = false
                 }
 
-                this.displayContactDetail = true
             } catch (ex) {
-                console.log(ex)
                 this.error = 'Unfortunately an error occured loading contact details. Please refresh the page and try again.'
                 this.isLoading = false
             }
