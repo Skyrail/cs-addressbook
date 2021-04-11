@@ -75,7 +75,7 @@ export default {
         loadListData() {
             this.isLoading = true
             this.error = ''
-            return axios.get(`/api/contacts?query=${this.searchQuery}&per_page=${this.displayCount}&page=${this.pageNo}`)
+            return axios.get(`/contacts?query=${this.searchQuery}&per_page=${this.displayCount}&page=${this.pageNo}`)
         },
         async loadPage(pageNumber) {
 

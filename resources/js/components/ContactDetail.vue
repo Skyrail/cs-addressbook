@@ -139,7 +139,7 @@ export default {
     methods: {
         loadContactData(contactId) {
             this.isLoading = true
-            return axios.get(`/api/contact/${contactId}`)
+            return axios.get(`/contact/${contactId}`)
         },
         async showContactDetail(contactId) {
 

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\ContactRepositoryInterface;
 use Illuminate\Http\Request;
 
-class ContactsApiController extends Controller
+class ContactsController extends Controller
 {
     private $repo;
 

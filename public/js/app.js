@@ -16317,7 +16317,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   methods: {
     loadContactData: function loadContactData(contactId) {
       this.isLoading = true;
-      return axios.get("/api/contact/".concat(contactId));
+      return axios.get("/contact/".concat(contactId));
     },
     showContactDetail: function showContactDetail(contactId) {
       var _this = this;
@@ -16436,7 +16436,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     loadListData: function loadListData() {
       this.isLoading = true;
       this.error = '';
-      return axios.get("/api/contacts?query=".concat(this.searchQuery, "&per_page=").concat(this.displayCount, "&page=").concat(this.pageNo));
+      return axios.get("/contacts?query=".concat(this.searchQuery, "&per_page=").concat(this.displayCount, "&page=").concat(this.pageNo));
     },
     loadPage: function loadPage(pageNumber) {
       var _this = this;
