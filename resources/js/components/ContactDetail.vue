@@ -21,7 +21,7 @@
 
                 <div v-if="error" class="bg-orange text-white w-100 rounded-md p-4 mt-2 mb-2">
                     <h3 class="text-lg font-semibold">An error occured while loading the contact details</h3>
-                    <p class="p-2">The error returned was '{{error}}'</p>
+                    <p class="p-2">{{error}}</p>
                 </div>
 
                 <div v-if="contactIsLoaded">
@@ -120,6 +120,8 @@ export default {
                 this.displayContactDetail = true
             } catch (ex) {
                 console.log(ex)
+                this.error = 'Unfortunately an error occured loading contact details. Please refresh the page and try again.'
+                this.isLoading = false
             }
         },
         openModal() {

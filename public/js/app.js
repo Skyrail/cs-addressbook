@@ -16348,15 +16348,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 _this.displayContactDetail = true;
-                _context.next = 14;
+                _context.next = 16;
                 break;
 
               case 11:
                 _context.prev = 11;
                 _context.t0 = _context["catch"](0);
                 console.log(_context.t0);
+                _this.error = 'Unfortunately an error occured loading contact details. Please refresh the page and try again.';
+                _this.isLoading = false;
 
-              case 14:
+              case 16:
               case "end":
                 return _context.stop();
             }
@@ -16827,7 +16829,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $options.closeModal && $options.closeModal.apply($options, arguments);
         }),
         "class": "hover:bg-lightblue group flex items-center rounded-md bg-indigo text-white text-sm font-medium px-4 py-2"
-      }, [_hoisted_5, _hoisted_6])]), $data.isLoading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" LOADING ICON "), _hoisted_8, _hoisted_9])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_12, "The error returned was '" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error) + "'", 1
+      }, [_hoisted_5, _hoisted_6])]), $data.isLoading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" LOADING ICON "), _hoisted_8, _hoisted_9])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error), 1
       /* TEXT */
       )])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.contactIsLoaded ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
         src: $data.contact.images.thumb.url,
