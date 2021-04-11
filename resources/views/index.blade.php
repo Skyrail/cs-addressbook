@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="py-3 mx-auto min-w-max w-1/2 text-sm align-middle text-center">
-            Powered by <img src="/images/churchsuite-indigo-logo.png" class="h-6 inline-block"/>
+            Powered by <a href="https://churchsuite.com/"><img src="/images/churchsuite-indigo-logo.png" class="h-6 inline-block"/></a>
         </div>
     </div>
 
