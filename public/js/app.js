@@ -16403,7 +16403,8 @@ __webpack_require__.r(__webpack_exports__);
       displayCount: 5,
       displayCountOptions: [5, 10, 25],
       searchQuery: "",
-      searchTimeout: null
+      searchTimeout: null,
+      isLoading: true
     };
   },
   methods: {
@@ -16418,6 +16419,7 @@ __webpack_require__.r(__webpack_exports__);
     loadPage: function loadPage(pageNumber) {
       this.pageNo = pageNumber;
       this.loadData();
+      this.isLoading = false;
     },
     paginationClass: function paginationClass(page) {
       return {
@@ -16544,6 +16546,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       clearTimeout(this.searchTimeout);
+      this.isLoading = true;
       this.searchTimeout = setTimeout(function (scope) {
         scope.loadPage(1);
       }, 500, this);
@@ -16842,19 +16845,30 @@ var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 
 var _hoisted_4 = {
   key: 0,
-  "class": "divide-y divide-gray-200 bg-gray-100 rounded-md p-2"
+  "class": "relative divide-y divide-gray-200 bg-gray-100 rounded-md p-2"
 };
 var _hoisted_5 = {
+  key: 0,
+  "class": "bg-darkgrey bg-opacity-90 rounded-md absolute top-0 bottom-0 left-0 right-0 flex"
+};
+
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  "class": "self-center text-center w-100 m-2 flex-grow text-white text-1xl"
+}, "Loading...", -1
+/* HOISTED */
+);
+
+var _hoisted_7 = {
   key: 1,
   "class": "bg-gray-100 rounded-md mt-2 p-2 flex flex-wrap-reverse flex-col md:flex-row justify-between"
 };
-var _hoisted_6 = {
+var _hoisted_8 = {
   "class": "md:m-0 md:mr-2 mb-2 mt-2 text-center self-center"
 };
 
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Show ");
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Show ");
 
-var _hoisted_8 = {
+var _hoisted_10 = {
   key: 0,
   "class": "p-2 text-center"
 };
@@ -16887,7 +16901,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , ["contact", "onClick"]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.contacts.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+  )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(vue__WEBPACK_IMPORTED_MODULE_0__.Transition, {
+    name: "fade"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [$data.isLoading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_5, [_hoisted_6])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
+    }),
+    _: 1
+    /* STABLE */
+
+  })])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.contacts.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
     "class": "p-2 rounded-md",
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
       return $data.displayCount = $event;
@@ -16905,7 +16928,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.displayCount]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" of " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.contactCount) + " contacts ", 1
   /* TEXT */
-  )]), $options.contactCount > $data.displayCount ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_8, [$data.pageNo != 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
+  )]), $options.contactCount > $data.displayCount ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_10, [$data.pageNo != 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
     key: 0,
     onClick: _cache[3] || (_cache[3] = function ($event) {
       return $options.loadPage(_this.pageNo - 1);

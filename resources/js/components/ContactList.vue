@@ -11,10 +11,15 @@
             </form>
         </div>
     </div>
-    <div class="divide-y divide-gray-200 bg-gray-100 rounded-md p-2" v-if="contacts.length">
+    <div class="relative divide-y divide-gray-200 bg-gray-100 rounded-md p-2" v-if="contacts.length">
 
         <contact-list-item v-for="contact in contacts" :key="contact.id" :contact="contact" @click="showContactDetail(contact.id)"></contact-list-item>
-    
+
+        <transition name="fade">
+            <div class="bg-darkgrey bg-opacity-90 rounded-md absolute top-0 bottom-0 left-0 right-0 flex" v-if="isLoading">
+                <div class="self-center text-center w-100 m-2 flex-grow text-white text-1xl">Loading...</div>
+            </div>
+        </transition>
     </div>
         <div v-if="contacts.length" class="bg-gray-100 rounded-md mt-2 p-2 flex flex-wrap-reverse flex-col md:flex-row justify-between">
             <div class="md:m-0 md:mr-2 mb-2 mt-2 text-center self-center">
@@ -52,6 +57,7 @@ export default {
             displayCountOptions: [5, 10, 25],
             searchQuery: "",
             searchTimeout: null,
+            isLoading: true
         };
     },
     methods: {
@@ -62,6 +68,7 @@ export default {
         loadPage(pageNumber) {
             this.pageNo = pageNumber
             this.loadData()
+            this.isLoading = false
         },
         paginationClass(page) {
             return {
@@ -173,6 +180,7 @@ export default {
             }
 
             clearTimeout(this.searchTimeout)
+            this.isLoading = true
 
             this.searchTimeout = setTimeout(function(scope) {
                 scope.loadPage(1)
