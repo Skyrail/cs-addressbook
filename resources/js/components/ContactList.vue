@@ -1,9 +1,9 @@
 <template>
 <div>
     <div>
-        <div class="py-4 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+        <div class="py-4 text-base leading-6 space-y-4 text-darkgrey sm:text-lg sm:leading-7">
             <form class="w-full relative">
-                <svg width="20" height="20" fill="currentColor" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                <svg width="20" height="20" fill="currentColor" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-dovegrey">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
                 </svg>
 
@@ -17,7 +17,7 @@
     
     </div>
         <div v-if="contacts.length" class="bg-gray-100 rounded-md mt-2 p-2 flex flex-wrap-reverse flex-col md:flex-row justify-between">
-            <div class="md:m-0 mb-4 mt-2 text-center">
+            <div class="md:m-0 md:mr-2 mb-2 mt-2 text-center self-center">
                 Show
                 <select class="p-2 rounded-md" v-model="displayCount">
                     <option v-for="count in displayCountOptions" :key="count" :value="count">{{count}}</option>
@@ -25,9 +25,9 @@
                 of {{contactCount}} contacts
             </div>
             <div v-if="contactCount > displayCount" class="p-2 text-center">
-                <button v-if="pageNo != 1" @click="loadPage(this.pageNo - 1)" class="text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white mr-2">&lt;</button>
+                <button v-if="pageNo != 1" @click="loadPage(this.pageNo - 1)" class="text-indigo bg-white p-2 px-4 rounded-md hover:bg-darkgrey hover:text-white mr-2">&lt;</button>
                 <button v-for="page in paginationArray" :key="page.pageNo" @click="page.pageNo != false && loadPage(page.pageNo)" :class="paginationClass(page)" class="p-2 px-4 rounded-md mr-2">{{(page.pageNo ? page.pageNo : '...')}}</button>
-                <button v-if="pageNo != pageCount" @click="loadPage(this.pageNo + 1)" class="text-yellow-600 bg-white p-2 px-4 rounded-md hover:bg-gray-700 hover:text-white">&gt;</button>
+                <button v-if="pageNo != pageCount" @click="loadPage(this.pageNo + 1)" class="text-indigo bg-white p-2 px-4 rounded-md hover:bg-darkgrey hover:text-white">&gt;</button>
             </div>
         </div>
     </div>
@@ -56,6 +56,7 @@ export default {
     },
     methods: {
         loadData() {
+            //TODO: handle errors - change to use await/async?
             axios.get(`/api/contacts?query=${this.searchQuery}&per_page=${this.displayCount}&page=${this.pageNo}`).then(response => (this.contacts = response.data.contacts, this.meta = response.data.meta))
         },
         loadPage(pageNumber) {
@@ -64,9 +65,9 @@ export default {
         },
         paginationClass(page) {
             return {
-                'bg-yellow-600 text-white hover:bg-gray-700 hover:text-white ': page.currentPage, 
-                'text-yellow-600 bg-white hover:bg-gray-700 hover:text-white ': !page.currentPage && page.pageNo, 
-                'text-gray-600 bg-white ': !page.currentPage && !page.pageNo
+                'bg-indigo text-white hover:bg-darkgrey hover:text-white ': page.currentPage, 
+                'text-indigo bg-white hover:bg-darkgrey hover:text-white ': !page.currentPage && page.pageNo, 
+                'text-darkgrey bg-white ': !page.currentPage && !page.pageNo
             }
         },
         showContactDetail(contactId) {

@@ -11,16 +11,19 @@
 
 </head>
 
-<body class="min-h-screen bg-gray-100 py-6 sm:py-12 flex flex-col justify-center">
+<body class="min-h-screen bg-gray-100 text-darkgrey py-6 sm:py-12 flex flex-col justify-center">
     <div class="py-6" id="addressbook">
         <div class="relative py-3 lg:w-1/2 md:w-2/3 sm:w-3/4 min-w-max sm:max-w-xl lg:max-w-3xl sm:mx-auto">
-            <div class="absolute inset-0 bg-gradient-to-b from-yellow-400 to-yellow-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-lightblue to-indigo shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-2 sm:rounded-3xl"></div>
             <div class="relative px-4 py-6 bg-white shadow-lg sm:rounded-3xl sm:p-10">
                 <div class="mx-auto">
                     <contact-list></contact-list>
 
                 </div>
             </div>
+        </div>
+        <div class="relative py-3 mx-auto min-w-max w-1/2 text-sm align-middle text-center">
+            Powered by <img src="/images/churchsuite-indigo-logo.png" class="h-6 inline-block"/>
         </div>
     </div>
 

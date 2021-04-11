@@ -3,8 +3,8 @@
         <div class="bg-white rounded-lg w-5/6 md:w-2/3 lg:w-1/2 mx-auto p-6">
 
             <header class="flex items-center justify-between">
-                <h2 class="text-lg leading-6 font-medium text-black">Contact Detail</h2>
-                <button @click="closeModal" class="hover:bg-yellow-400 group flex items-center rounded-md bg-yellow-600 text-white text-sm font-medium px-4 py-2">
+                <h2 class="leading-6 text-xl font-semibold text-darkgrey">Contact Detail</h2>
+                <button @click="closeModal" class="hover:bg-lightblue group flex items-center rounded-md bg-indigo text-white text-sm font-medium px-4 py-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
                     </svg>
@@ -18,9 +18,9 @@
                 <img src="images/loading-icon.gif" />
             </div>
 
-            <div v-if="error">
-                <h3>There was an error loading the contact details</h3>
-                <p>The error returned was '{{error}}'</p>
+            <div v-if="error" class="bg-orange text-white w-100 rounded-md p-4 mt-2 mb-2">
+                <h3 class="text-lg font-semibold">An error occured while loading the contact details</h3>
+                <p class="p-2">The error returned was '{{error}}'</p>
             </div>
 
             <div v-if="contactIsLoaded">
@@ -88,7 +88,7 @@ export default {
             contactIsLoaded: false,
             isLoading: false,
             error: '',
-            displayContactDetail: true
+            displayContactDetail: false
         };
     },
     methods: {
