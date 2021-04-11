@@ -16311,7 +16311,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       contactIsLoaded: false,
       isLoading: false,
       error: '',
-      displayContactDetail: false
+      displayContactDetail: true
     };
   },
   methods: {
@@ -16637,7 +16637,7 @@ var _hoisted_1 = {
   "class": "bg-opacity-90 bg-gray-900 fixed left-0 top-0 w-screen h-screen flex flex-col justify-center"
 };
 var _hoisted_2 = {
-  "class": "bg-white rounded-lg w-2/3 md:w-2/3 lg:w-2/5 mx-auto p-6"
+  "class": "bg-white sm:rounded-lg w-full sm:w-2/3 lg:w-2/5 mx-auto p-6"
 };
 var _hoisted_3 = {
   "class": "flex items-center justify-between"
