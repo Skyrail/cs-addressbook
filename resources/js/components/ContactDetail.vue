@@ -13,7 +13,7 @@
                     </button>
                 </header>
 
-                <div v-if="isLoading" class="roudned-md bg-indigo text-white p-2 rounded-md">
+                <div v-if="isLoading" class="bg-indigo text-white w-100 rounded-md p-4 my-2">
                     <h3>
                     <!-- LOADING ICON -->
                     <img src="images/loading-icon.gif" class="inline-block w-8 h-8" />
@@ -21,7 +21,7 @@
                     </h3>
                 </div>
 
-                <div v-if="error" class="bg-orange text-white w-100 rounded-md p-4 mt-2 mb-2">
+                <div v-if="error" class="bg-orange text-white w-100 rounded-md p-4 my-2">
                     <h3 class="text-lg font-semibold">An error occured while loading the contact details</h3>
                     <p class="p-2">{{error}}</p>
                 </div>

@@ -22,7 +22,7 @@
                 </div>
             </div>
         </div>
-        <div class="relative py-3 mx-auto min-w-max w-1/2 text-sm align-middle text-center">
+        <div class="py-3 mx-auto min-w-max w-1/2 text-sm align-middle text-center">
             Powered by <img src="/images/churchsuite-indigo-logo.png" class="h-6 inline-block"/>
         </div>
     </div>
