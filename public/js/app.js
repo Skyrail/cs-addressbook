@@ -17088,11 +17088,11 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 
 var _hoisted_7 = {
   key: 0,
-  "class": "bg-orange text-white p-2 m-2 text-center rounded-md"
+  "class": "bg-orange text-white p-4 m-2 text-center rounded-md max-w-fit"
 };
 var _hoisted_8 = {
   key: 0,
-  "class": "bg-indigo text-white p-2 m-2 text-center rounded-md"
+  "class": "bg-indigo text-white p-4 m-2 text-center rounded-md"
 };
 var _hoisted_9 = {
   key: 1,

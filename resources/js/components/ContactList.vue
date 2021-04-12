@@ -24,11 +24,11 @@
         </div>
 
         <transition name="fade">
-            <div class="bg-orange text-white p-2 m-2 text-center rounded-md" v-if="error && !isLoading">{{error}}</div>
+            <div class="bg-orange text-white p-4 m-2 text-center rounded-md max-w-fit" v-if="error && !isLoading">{{error}}</div>
         </transition>
 
         <transition name="fade">
-            <div class="bg-indigo text-white p-2 m-2 text-center rounded-md" v-if="searchQuery && !isLoading && contactCount == 0">No contacts found</div>
+            <div class="bg-indigo text-white p-4 m-2 text-center rounded-md" v-if="searchQuery && !isLoading && contactCount == 0">No contacts found</div>
         </transition>
 
         <div v-if="contacts.length" class="bg-gray-100 rounded-md mt-2 p-2 flex flex-wrap-reverse flex-col md:flex-row justify-between">

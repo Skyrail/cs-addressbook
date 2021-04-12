@@ -20,6 +20,9 @@ module.exports = {
       },
       minHeight: {
         '12': '3rem'
+      },
+      maxWidth: {
+        'fit': 'fit-content'
       }
     }
   },
