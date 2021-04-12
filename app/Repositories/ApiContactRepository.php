@@ -84,7 +84,7 @@ class ApiContactRepository implements ContactRepositoryInterface
             $data['code'] = $result->getStatusCode();
         }
 
-        return $result;
+        return $data;
     }
 
     /**
