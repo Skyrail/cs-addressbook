@@ -16578,14 +16578,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   watch: {
     searchQuery: function searchQuery(query) {
       this.searchQuery = query;
+      clearTimeout(this.searchTimeout);
 
       if (query == '') {
         this.contacts = [];
+        this.isLoading = false;
         return;
-      }
-
-      clearTimeout(this.searchTimeout); // Although this is setup in the loadPage function we add a delay after each key press before we fire off
+      } // Although this is setup in the loadPage function we add a delay after each key press before we fire off
       // the request so not to send off too many requests while a person is typing
+
 
       this.isLoading = true;
       this.searchTimeout = setTimeout(function (scope) {

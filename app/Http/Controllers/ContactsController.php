@@ -27,21 +27,31 @@ class ContactsController extends Controller
      */
     public function getContacts(Request $request) {
 
-        $result = $this->repo->find($request->query('query'), $request->query('page'), $request->query('per_page'));
+        if($request->query('query') == null) {
+            $result = ['error' => "The search query cannot be blank", 'code' => 400];
+        } else {
+            $result = $this->repo->find($request->query('query'), $request->query('page'), $request->query('per_page'));
+        }
 
-        return response()->json($result);
+        return response()->json($result, $result['code']);
     }
 
     /**
      * Returns a specific contact
      * 
      * @param Request $request
-     * @param int $contact_id
+     * @param $contact_id
      */
-    public function getContact(Request $requeset, int $contact_id) {
+    public function getContact(Request $request, $contact_id) {
 
-        $result = $this->repo->findById($contact_id);
+        if($contact_id == null) {
+            $result = ['error' => "The contact ID cannot be blank", 'code' => 400];
+        } else if (!is_numeric($contact_id)) {
+            $result = ['error' => "The contact ID must be a number", 'code' => 400];
+        } else {
+            $result = $this->repo->findById($contact_id);
+        }
 
-        return response()->json($result);
+        return response()->json($result, $result['code']);
     }
 }
