@@ -16354,7 +16354,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 11:
                 _context.prev = 11;
                 _context.t0 = _context["catch"](0);
-                _this.error = 'Unfortunately an error occured loading contact details. Please refresh the page and try again.';
+
+                if (_context.t0.response.data.error) {
+                  _this.error = _context.t0.response.data.error;
+                } else {
+                  _this.error = 'Unfortunately an error occured loading contact details. Please refresh the page and try again.';
+                }
+
                 _this.isLoading = false;
 
               case 15:

@@ -173,7 +173,11 @@ export default {
                 }
 
             } catch (ex) {
-                this.error = 'Unfortunately an error occured loading contact details. Please refresh the page and try again.'
+                if(ex.response.data.error) {
+                    this.error = ex.response.data.error
+                } else {
+                    this.error = 'Unfortunately an error occured loading contact details. Please refresh the page and try again.'
+                }
                 this.isLoading = false
             }
         },
