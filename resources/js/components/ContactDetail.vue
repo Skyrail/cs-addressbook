@@ -1,7 +1,7 @@
 <template>
     <transition name="fade">
-        <div class="bg-opacity-90 bg-gray-900 fixed left-0 top-0 w-screen h-screen flex flex-col justify-center" v-if="displayContactDetail">
-            <div class="bg-white sm:rounded-lg w-full sm:w-2/3 lg:w-2/5 mx-auto p-6">
+        <div class="bg-opacity-90 bg-gray-900 fixed left-0 top-0 w-screen h-screen flex flex-col overflow-scroll" v-if="displayContactDetail">
+            <div class="bg-white sm:rounded-lg w-full sm:w-2/3 lg:w-2/5 m-auto p-6">
 
                 <header class="flex items-center justify-between">
                     <h2 class="leading-6 text-xl font-semibold text-darkgrey">Contact Detail</h2>
