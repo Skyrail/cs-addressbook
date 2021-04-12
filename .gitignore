@@ -24,3 +24,6 @@ Homestead.json
 
 # Ignoring the spec file as it has non-public details in it
 spec.txt
+
+# Editor config
+.editorconfig
