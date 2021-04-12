@@ -16513,13 +16513,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   computed: {
     contactCount: function contactCount() {
-      return this.meta.result_count;
+      return this.meta.result_count ? this.meta.result_count : 0;
     },
     pageCount: function pageCount() {
       return Math.ceil(this.contactCount / this.displayCount);
     },
     paginationArray: function paginationArray() {
       if (this.pageCount == 1) {
+        // If there's only one page then no pagination is needed
         return [];
       }
 

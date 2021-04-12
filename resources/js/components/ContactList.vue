@@ -116,7 +116,7 @@ export default {
     },
     computed: {
         contactCount() {
-            return this.meta.result_count;
+            return this.meta.result_count ? this.meta.result_count : 0;
         },
         pageCount() {
             return Math.ceil(this.contactCount / this.displayCount)
@@ -124,6 +124,7 @@ export default {
         paginationArray() {
 
             if(this.pageCount == 1) {
+                // If there's only one page then no pagination is needed
                 return []
             }
 
