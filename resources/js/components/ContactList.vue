@@ -34,7 +34,7 @@
         <div v-if="contacts.length" class="bg-gray-100 rounded-md mt-2 p-2 flex flex-wrap-reverse flex-col md:flex-row justify-between">
             <div class="md:m-0 md:mr-2 mb-2 mt-2 text-center self-center">
                 Show
-                <select class="p-2 rounded-md" v-model="displayCount">
+                <select class="p-2 rounded-md bg-white" v-model="displayCount">
                     <option v-for="count in displayCountOptions" :key="count" :value="count">{{count}}</option>
                 </select>
                 of {{contactCount}} contacts
