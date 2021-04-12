@@ -19,14 +19,16 @@ Developed using the following package manager versions:
 6. Run `npm install` to install all JavaScript dependencies - may take a while
 7. If all has installed okay then you should be ready to go - see below to see how to run it locally.
 
-## Developing with
-
-Uses Laravel Mix via NPM watch to compile SASS and JS files (e.g. for Vue.js and Tailwind)
-
-`npm run watch`
-
 ## Running
 
 Simplest way is using Artisan's built in server
 
 `php artisan serve`
+
+And then visit the URL that's generated.
+
+## Developing 
+
+Uses Laravel Mix via NPM watch to compile SASS and JS files (e.g. for Vue.js and Tailwind)
+
+`npm run watch`
